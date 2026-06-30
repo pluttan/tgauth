@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+venv/
+.venv/
+env/
+*.egg-info/
+
+# Environment / secrets
+.env
+*.env.local
+
+# Node
+node_modules/
+.next/
+dist/
+build/
+
+# macOS
+.DS_Store
+
+# Archives
+*.zip
+*.tar.gz
+
+# Logs
+*.log
