@@ -1,15 +1,8 @@
-![Header](header.png)
-
 <div align="center">
 
 # tgauth
 
 **Telegram-based OTP authentication system**
-
-[![License](https://img.shields.io/badge/license-MIT-2C2C2C?style=for-the-badge&labelColor=1E1E1E)](LICENSE)
-[![Python](https://img.shields.io/badge/python-3.x-2C2C2C?style=for-the-badge&logo=python&labelColor=1E1E1E)]()
-[![FastAPI](https://img.shields.io/badge/fastapi-verify%20api-2C2C2C?style=for-the-badge&logo=fastapi&labelColor=1E1E1E)]()
-[![Telegram](https://img.shields.io/badge/telegram-bot-2C2C2C?style=for-the-badge&logo=telegram&labelColor=1E1E1E)]()
 
 </div>
 
@@ -26,21 +19,36 @@ Authentication service that uses Telegram as the OTP delivery channel. An approv
 
 ## ■ Stack
 
+<div align="center">
+
 | Component | Technology |
 |-----------|------------|
 | Bot | Python (pyTelegramBotAPI) |
 | Verify API | FastAPI + Pydantic |
 | Auth routing | Flask |
 
-## ■ Repository Structure
+</div>
+
+## ■ How It Works
 
 ```
-backend/
-  main.py     FastAPI app — POST /verify, in-memory code store
-  bot.py      Telegram bot (telebot) — approval, code generation, resources
-  server.py   Flask routes — /auth form and per-resource redirects
-frontend/     placeholder package
+1. User sends a command to the Telegram bot to request a one-time code.
+2. Bot generates a code via secrets.token_hex and delivers it to the user over Telegram.
+3. User enters the code on the /auth web form served by Flask.
+4. The code is validated by the FastAPI POST /verify endpoint.
+5. Verify API checks the code against the in-memory store (time-limited, single-use) and returns a session token on success.
+6. Admin manages user approval and per-user resource access via inline buttons and /manage commands in the bot.
 ```
+
+## ■ Screenshots
+
+<div align="center">
+
+![Screenshot](screenshots/main.png)
+
+*Main authentication page*
+
+</div>
 
 ## ■ Usage
 
@@ -53,9 +61,15 @@ cd backend && uvicorn main:app
 #   WEB_SERVER_HOST, WEB_SERVER_PORT, CODE_EXPIRATION_TIME
 ```
 
-## ■ Screenshots
+## ■ Repository Structure
 
-![Screenshot](screenshots/main.png)
+```
+backend/
+  main.py     FastAPI app — POST /verify, in-memory code store
+  bot.py      Telegram bot (telebot) — approval, code generation, resources
+  server.py   Flask routes — /auth form and per-resource redirects
+frontend/     placeholder package
+```
 
 ## ■ License
 
